@@ -21,7 +21,7 @@ $ aws cloudformation deploy --template-file s3-web-access.yml \
 S3BucketName=kento-demo-s3-backet
 ```
 
-![s3-web-access](/Users/kento/Programing/AutomationProjects/s3-cfn-samples/images/s3-web-access.png)
+![s3-web-access](./images/s3-web-access.png)
 
 
 
@@ -41,13 +41,13 @@ S3BucketName=kento-demo-s3-backet　NameTagPrefix=ProjectAA
 
 
 
-![s3-versioning-1](/Users/kento/Programing/AutomationProjects/s3-cfn-samples/images/s3-versioning-1.png)
+![s3-versioning-1](./images/s3-versioning-1.png)
 
 
 
-![s3-versioning-2](/Users/kento/Programing/AutomationProjects/s3-cfn-samples/images/s3-versioning-2.png)
+![s3-versioning-2](./images/s3-versioning-2.png)
 
 
 
-![s3-versioning-3](/Users/kento/Programing/AutomationProjects/s3-cfn-samples/images/s3-versioning-3.png)
+![s3-versioning-3](./images/s3-versioning-3.png)
 
