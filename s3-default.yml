@@ -1,0 +1,24 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: デフォルト設定のS3を構築  ## ここの説明は英語で書かないと文字化けする!!
+
+Parameters:
+  S3BucketName:
+    Description: バケット名（CFn実行時の値を使用する）
+    Type: String
+
+Resources:
+  S3Bucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName:
+        Ref: S3BucketName
+      AccessControl: Private
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: True
+        BlockPublicPolicy: True
+        IgnorePublicAcls: True
+        RestrictPublicBuckets: True
+
+Outputs:
+  S3BucketName:
+    Value: !Ref S3Bucket

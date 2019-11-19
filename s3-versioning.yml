@@ -1,0 +1,55 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: バージョニングを実装したバケットを作成する
+
+Parameters:
+  S3BucketName:
+    Description: バケット名（CFn実行時の値を使用する）
+    Default: demo-kento-s3-backet
+    Type: String
+
+  NameTagPrefix:
+    Type: String
+    Default: ProjectX
+    Description: タグ名（プロジェクト名とか部門名とか色々）
+
+Resources:
+  S3Bucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName:
+        Ref: S3BucketName
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: AES256
+      Tags:
+        - Key: Name
+          Value:
+            Ref: NameTagPrefix
+        - Key: key1
+          Value: value1
+        - Key: key2
+          Value: value2
+      LifecycleConfiguration:
+        Rules:
+          - Id: !Sub ${ NameTagPrefix }-LifeCycle-Rule
+            Status: Enabled
+            Prefix: images/  ## images/ 以下のファイルがアーカイブ対象
+            TagFilters:      ## タグを含むファイルのみ対象とする
+              - Key: key1
+                Value: value1
+              - Key: key2
+                Value: value2
+            ExpirationInDays: 3650 ## 10年保持
+            Transitions:
+              - StorageClass: GLACIER
+                TransitionInDays: 30 ## 30日でGlacier行き
+
+Outputs:
+   S3BucketName:
+    Description: S3バケットの名前
+    Value:
+      Ref: S3Bucket
+    Export:
+      Name: !Sub ${NameTagPrefix}-S3Bucket
+

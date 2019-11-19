@@ -1,0 +1,32 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Webからアクセスできるバケットを作成
+
+Parameters:
+  S3BucketName:
+    Description: バケット名（CFn実行時の値を使用する）
+    Type: String
+
+Resources:
+  S3Bucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName:
+        Ref: S3BucketName
+      AccessControl: Private
+  S3BucketPolicy:
+    Type: "AWS::S3::BucketPolicy"
+    Properties:
+      Bucket:
+        Ref: S3Bucket
+      PolicyDocument:
+        Statement:
+          Action:
+             - "s3:GetObject"
+          Effect: "Allow"
+          Resource: !Sub "arn:aws:s3:::${S3BucketName}/*"
+          Principal: "*"
+
+Outputs:
+  S3BucketName:
+    Value:
+      Ref: S3Bucket
